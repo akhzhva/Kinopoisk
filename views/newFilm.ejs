@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <%- include('partials/head.ejs')%>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('partials/header.ejs')%>
+    <div class="container">
+        <div class="main">
+            <form action="/api/films/new" method="POST" class="form" enctype="multipart/form-data">
+                <h3>Новый фильм</h3>
+                <fieldset class="fieldset">
+                    <label for="">Добавьте картинку фильма</label>
+                    <input type="file" name="image">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <label for="">Название фильма на русском</label>
+                    <input type="text" placeholder="Название фильма на русском" name="titleRus">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <label for="">Название фильма на английском</label>
+                    <input type="text" placeholder="Название фильма на английском" name="titleEng">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <label for="">Год выпуска</label>
+                    <input type="text" placeholder="Введите год выпуска фильма" name="year">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <label for="">Длительность</label>
+                    <input type="text" placeholder="Введите длительность фильма" name="time">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <label for="">Страна выпуска</label>
+                    <select name="country" id="">
+                    <% 
+                        countries.forEach(country => {
+                    %>
+                        <option value="<%=country._id%>"><%=country.name%></option>
+                    <%
+                    })%>
+                    </select>
+                </fieldset>
+                <fieldset class="fieldset">
+                    <label for="">Выберите жанр</label>
+                    <select name="genre" id="">
+                    <% 
+                        genres.forEach(genre => {
+                    %>
+                        <option value="<%=genre._id%>"><%=genre.name%></option>
+                    <%
+                    })%>
+                    </select>
+                </fieldset>
+                <a class="addSerialsBtn" id="addSerialsBtn" onclick="addSerials()">Добавить серий</a>
+                <a class="addSerialsBtn" id="addFilmUrlBtn" onclick="addFilmUrl()">Добавить ссылка на фильм</a>
+                <div id="urls"></div>
+                <fieldset class="fieldset">
+                    <button type="submit">Добавить</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <%- include('partials/scripts.ejs')%>
+</body>
+</html>

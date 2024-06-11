@@ -1,0 +1,148 @@
+<html lang="en">
+<head>
+    <%- include('partials/head.ejs')%>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('partials/header.ejs')%>
+    <div class="container">
+        <div class="main-detail">
+            <div class="detail">
+                <div class="film-image">
+                    <img src="<%=film.image%>" alt="">
+                </div>
+                <div class="film-info-detail">
+                    <h2><%=film.titleRus%> <%=film.year%></h2>
+                    <p><%=film.titleEng%></p>
+                    <%
+                        if(user && user.toWatch && user.toWatch.includes(film._id)){
+                    %>
+                           <button class="film-btn" onclick ="deleteFormToWatch('<%=film._id%>')">
+                                <img src="/image/icon/saved.png" alt="">
+                                Сохранено
+                                </button> 
+                    <%
+                        }else{
+                    %>
+                            <button class="film-btn" onclick ="saveToWatch('<%=film._id%>')">
+                                <img src="/image/icon/save.svg" alt="">
+                                Буду смотреть
+                            </button>
+                    <%
+                        }
+                    %>
+                    <h4>О фильме</h4>
+                    <div class="film-details">
+                        <p>Год производства</p>
+                        <p><%=film.year%></p>
+                    </div>
+                    <div class="film-details">
+                        <p>Страна</p>
+                        <p><%=film.country.name%></p>
+                    </div>
+                    <div class="film-details">
+                        <p>Жанр</p>
+                        <p><%=film.genre.name%></p>
+                    </div>
+                    <div class="film-details">
+                        <p>Время</p>
+                        <p><%=film.time%> мин</p>
+                    </div>
+                    <div class="film-details">
+                        <p>Рейтинг</p>
+                        <p><%=averageRate%></p>
+                    </div>
+                </div>
+            </div>
+            <%
+                if(film.video){
+            %>
+                    <div class="film-player">
+                        <iframe width="560" height="315" src="<%=film.video%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+            <%
+                }else if(film.series.length > 0){
+                    film.series.forEach((s , i) => {
+            %>
+                    <p><%=i + 1%> серия</p>
+                    <div class="film-player">
+                        <iframe width="560" height="315" src="<%=s%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+            <%
+                    })
+                }
+            %>
+            <div class="comments">
+                <h3>Коментарий</h3>
+                <%
+                    if(user && user._id){
+                %>
+                    <form class="add-comment-form" onSubmit="sendRate(event)">
+                        <p>Оцените фильме</p>
+                        <div class="comment-stars">
+                            <img onclick="rateFilm(1)" src="/image/icon/star.svg" alt="">
+                            <img onclick="rateFilm(2)" src="/image/icon/star.svg" alt="">
+                            <img onclick="rateFilm(3)" src="/image/icon/star.svg" alt="">
+                            <img onclick="rateFilm(4)" src="/image/icon/star.svg" alt="">
+                            <img onclick="rateFilm(5)" src="/image/icon/star.svg" alt="">
+                        </div>
+                        <p>Напишите коментарий</p>
+                        <textarea id="comment-text"></textarea>
+                        <input type="hidden" value="<%=user._id%>" id="comment_author">
+                        <input type="hidden" value="<%=film._id%>" id="comment_film">
+                        <button type="submit">Сохранить</button>
+                    </form>
+                <%
+                    }else{
+                %>
+                        <p>
+                            <a href="/login">Войдите</a>
+                            или 
+                            <a href="/regester">Зарегистрируйтесь</a>
+                            чтобы оставить коментарий
+                        </p>
+                <% 
+                    }
+                %>
+                <%
+                    if(rates){
+                        rates.forEach(rate => {
+                %>
+                            <div class="comment">
+                                <p>Автор: 
+                                    <a href=""><%=rate.authorId.full_name%></a>
+                                </p>
+                                <div class="comment-stars">
+                                    <%
+                                        for(let i = 0;i < 5; i++){
+                                            if(i < rate.rate){
+                                    %>
+                                                <img class="active-star" src="/image/icon/star.svg" alt="">
+                                    <%
+                                            }else{
+                                    %>
+                                                <img src="/image/icon/star.svg" alt="">
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </div>
+                                <%
+                                    if(rate.text.length > 0){
+                                %>
+                                        <p>Коментарий: <%=rate.text%></p>
+                                <%
+                                    }
+                                %>
+                                
+                            </div>
+                <%
+                        })
+                    }
+                %>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/scripts.ejs')%>
+</body>
+</html>

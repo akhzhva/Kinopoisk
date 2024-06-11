@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+    <%- include('partials/head.ejs')%>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('partials/header.ejs')%>
+    <div class="container">
+        <div class="main">
+            <form action="/api/signin" method="POST" class="form">
+                <h3>Войти</h3>
+                <fieldset class="fieldset">
+                    <label for="">E-mail</label>
+                    <input type="email" placeholder="Введите почту" name="email">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <label for="">Пароль</label>
+                    <input type="password" placeholder="Введите пароль" name="password">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <button type="submit">Войти</button>
+                </fieldset>
+                <p>У вас нет аккаунта? <a href="/regester">Зарегистрироваться</a></p>
+                <p>Войти с помощью: </p>
+                <a href="/api/auth/google">Google</a>
+            </form>
+        </div>
+    </div>
+    <%- include('partials/scripts.ejs')%>
+</body>
+</html>

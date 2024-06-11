@@ -1,0 +1,38 @@
+.addSerialsBtn{
+    padding: 15px 20px;
+    border: none;
+    background: grey;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 7px;
+    cursor: pointer;
+    width: 40%;
+    box-sizing: border-box;
+    margin: 10px 0;
+}
+.serials{
+    width: 100%;
+    margin: 15px 0;
+}
+.serials p{
+    font-size: 18px;
+    margin: 15px 0;
+    font-weight: 500;
+}
+.serials input{
+    width: 100%;
+    width: 100%;
+    padding: 15px 20px;
+    outline: none;
+    border: 1px solid rgba(31, 31, 31, .1);
+    border-radius: 7px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+#urls{
+    width: 40%;
+}
+#urls .fieldset{
+    width: 100%;
+}
